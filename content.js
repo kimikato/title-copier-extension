@@ -28,11 +28,9 @@
 	// コピー用ボタン生成
   	const btn = document.createElement("button");
   	btn.textContent = "コピー";
-  	btn.style.position = "fixed";
-  	btn.style.top = "10px";
-  	btn.style.right = "10px";
   	btn.style.zIndex = 9999;
   	btn.style.padding = "5px 10px";
+	btn.style.margin = "0 2rem";
   	btn.style.background = "#4CAF50";
   	btn.style.color = "#fff";
   	btn.style.border = "none";
@@ -49,7 +47,7 @@
     	}
   	});
 
-	document.body.appendChild(btn);
+	el.appendChild(btn);
 
   	// トースト表示
   	function showToast(msg) {
