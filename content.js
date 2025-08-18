@@ -3,7 +3,7 @@
 		["target_url_pattern","target_selector","regex_pattern","replacement"]
 	);
 
-	if (!taget_url_pattern || !target_selector) return;
+	if (!target_url_pattern || !target_selector) return;
 
 	try {
     	if (!new RegExp(target_url_pattern).test(location.href)) return;
@@ -19,7 +19,7 @@
 
   	if (regex_pattern) {
     	try {
-      		text = text.replace(new RegExp(regex, "g"), replacement || "");
+      		text = text.replace(new RegExp(regex_pattern, "g"), replacement || "");
     	} catch(e) {
       		console.error("正規表現置換エラー:", e);
     	}
