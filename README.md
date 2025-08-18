@@ -40,11 +40,11 @@
    - **置換文字列**  
      例: （空欄にすれば削除）
 
-	![Optionsページ] (./screenshot/screenshot_01.png)
+	![Optionsページ] (/screenshot/screenshot_01.png)
 
 3. 対象ページを開くと「コピー」ボタンが表示されます
 
-	![Youtube画面] (./screenshot/screenshot_02.png)
+	![Youtube画面] (/screenshot/screenshot_02.png)
 
 ---
 
