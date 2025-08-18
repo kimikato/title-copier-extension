@@ -52,7 +52,7 @@
 
 - **YouTubeの動画タイトルをコピーしたい場合**  
   - 対象URL: `^https://www.youtube.com/watch\?v=.*`
-  - CSSセレクタ: `h1.title`
+  - CSSセレクタ: `yt-formatted-string.ytd-watch-metadata`
   - 正規表現: （不要なら空欄）
   - 置換文字列: （不要なら空欄）
 
