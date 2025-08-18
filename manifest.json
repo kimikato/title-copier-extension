@@ -4,7 +4,7 @@
 	"version": "1.0.0",
 	"description": "Copy titles or any text element from web pages (regex supported). / 任意サイトでテキストをコピーできる拡張",
 	"permissions": [
-		"strage",
+		"storage",
 		"activeTab",
 		"scripting",
 		"clipboardWrite"
