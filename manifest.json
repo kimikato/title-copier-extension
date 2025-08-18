@@ -1,0 +1,24 @@
+{
+	"manifest_version": 3,
+	"name": "Title Copier Extension",
+	"version": "1.0.0",
+	"description": "Copy titles or any text element from web pages (regex supported). / 任意サイトでテキストをコピーできる拡張",
+	"permissions": [
+		"strage",
+		"activeTab",
+		"scripting",
+		"clipboardWrite"
+	],
+	"options_page": "options.html",
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"]
+		}
+	],
+	"icons": {
+		"16": "icon16.png",
+		"48": "iconn48.png",
+		"128": "icon128.png"
+	}
+}

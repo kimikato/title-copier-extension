@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>Title Copier Options</title>
+	<style>
+		body { font-family: sans-serif; padding: 20px; }
+		input { width: 100%; margin-bottom: 10px; padding: 5px; }
+		label { font-weight: bold; display: block; margin-top: 10px; }
+		button { padding: 5px 10px; }
+	</style>
+</head>
+<body>
+	<h2>Title Copier Options</h2>
+
+	<label>対象URL （正規表現）</label>
+	<input type="text" id="target_url_pattern" />
+
+	<label>コピー対象のCSSセレクタ</label>
+	<input type="text" id="target_selector" />
+
+	<label>正規表現パターン</label>
+	<input type="text" id="regex_pattern" />
+
+	<label>置換文字列</label>
+	<input type="text" id="replacement" />
+
+	<button id="save">保存</button>
+	<p is="status"></p>
+
+	<script src="options.js"></script>
+</body>
+</html>
