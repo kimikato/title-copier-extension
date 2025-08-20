@@ -82,7 +82,7 @@ function toast(message) {
 function add_rule(rule) {
 	const node = template.content.firstElementChild.cloneNode(true);
 	node.querySelector(".target_url_pattern").value = rule.target_url_pattern || "";
-	node.querySelector(".target_css_selector").value = rule.target_css_selector || "";
+	node.querySelector(".target_selector").value = rule.target_selector || "";
 	node.querySelector(".regex_pattern").value = rule.regex_pattern || "";
 	node.querySelector(".replacement").value = rule.replacement || "";
 
@@ -112,26 +112,26 @@ function add_rule(rule) {
 function collect_rules_from_DOM() {
 	return Array.from(rules_element.querySelectorAll(".rule")).map(rule_node => ({
 		target_url_pattern: rule_node.querySelector(".target_url_pattern").value.trim(),
-		target_css_selector: rule_node.querySelector(".target_css_selector").value.trim(),
+		target_selector: rule_node.querySelector(".target_selector").value.trim(),
 		regex_pattern: rule_node.querySelector(".regex_pattern").value.trim(),
 		replacement: rule_node.querySelector(".replacement").value ?? ""
-	})).filter(r => r.target_url_pattern && r.target_css_selector);
+	})).filter(r => r.target_url_pattern && r.target_selector);
 }
 
 // 初期ロード：単一設定からの移行もサポート
 (async function init() {
-	const store = await chrome.storage.sync.get(["rules", "taret_url_pattern", "target_css_selector", "regex_pattern", "replacement"]);
+	const store = await chrome.storage.sync.get(["rules", "taret_url_pattern", "target_selector", "regex_pattern", "replacement"]);
 	let rules = store.rules;
 
 	// 旧キーで保存されていたら移行
 	if ((!rules || !Array.isArray(rules) || rules.length === 0) &&
-		(store.target_url_pattern || store.target_css_selector || store.regex_pattern || store.replacement !== undefined)) {
+		(store.target_url_pattern || store.target_selector || store.regex_pattern || store.replacement !== undefined)) {
 			rules = [{
 				target_url_pattern: store.target_url_pattern || "",
-				target_css_selector: store.target_css_selector || "",
+				target_selector: store.target_selector || "",
 				regex_pattern: store.regex_pattern || "",
 				replacement: store.replacement ?? ""
-			}].filter(r => r.target_url_pattern && r.target_css_selector);
+			}].filter(r => r.target_url_pattern && r.target_selector);
 
 			await chrome.storage.sync.set({ rules });
 		}
