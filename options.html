@@ -4,29 +4,72 @@
 	<meta charset="UTF-8">
 	<title>Title Copier Options</title>
 	<style>
-		body { font-family: sans-serif; padding: 20px; }
-		input { width: 100%; margin-bottom: 10px; padding: 5px; }
-		label { font-weight: bold; display: block; margin-top: 10px; }
-		button { padding: 5px 10px; }
+		body { font-family: system-ui, sans-serif; padding: 20px; max-width: 900px; margin: 0 auto; }
+		h2 { margin-bottom: 8px; }
+		.row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+		.rule { border: 1px solid #ddd; border-radius: 10px; padding: 16px; margin-bottom: 14px; background: #fafafa; }
+		label { font-weight: 600; display: block; margin: 6px 0 4px; }
+		input { width: 95%; padding: 8px; border: 1px solid #ccc; border-radius: 8px; }
+		.actions { display: flex; gap: 8px; margin-top: 12px; }
+		button { padding: 8px 12px; border: 0; border-radius: 8px; cursor: pointer; }
+		.btn-add { background: #10b981; color: #fff; }
+		.btn-save { background: #3b82f6; color: #fff; }
+		.btn-remove { background: #ef4444; color: #fff; }
+		.btn-test { background: #6b7280; color: #fff; }
+		.muted { color: #6b7280; font-size: 12px; }
+		.toolbar { display: flex; gap: 10px; margin: 12px 0 18px; }
+		.btn-outline { background: #fff; color: #111; border: 1px solid #ddd; }
+		textarea { width: 100%; min-height: 80px; padding: 8px; border: 1px solid #ccc; border-radius: 8px; }
 	</style>
 </head>
 <body>
 	<h2>Title Copier Options</h2>
+	<p class="muted">複数サイト分のルールを登録できます。URL は正規表現、セレクタは CSS セレクタを指定してください。</p>
 
-	<label>対象URL （正規表現）</label>
-	<input type="text" id="target_url_pattern" />
+	<div class="toolbar">
+    	<button id="add_rule" class="btn-add">＋ ルールを追加</button>
+    	<button id="save_all" class="btn-save">💾 すべて保存</button>
+    	<button id="export_json" class="btn-outline">⤴︎ エクスポート</button>
+    	<button id="import_json" class="btn-outline">⤵︎ インポート</button>
+  	</div>
 
-	<label>コピー対象のCSSセレクタ</label>
-	<input type="text" id="target_selector" />
+	<div id="rules"></div>
 
-	<label>正規表現パターン</label>
-	<input type="text" id="regex_pattern" />
+	<p id="status" class="muted"></p>
 
-	<label>置換文字列</label>
-	<input type="text" id="replacement" />
+	<template id="rule_template">
+		<div class="rule">
+			<div class="row">
+				<div>
+					<label>対象URL （正規表現）</label>
+					<input type="text" class="target_url_pattern" placeholder="^https://example.com/.*" />
+				</div>
+				<div>
+					<label>コピー対象のCSSセレクタ</label>
+					<input type="text" class="target_css_selector" placeholder="h1.title, #main .headline など" />
+				</div>
+				<div>
+					<label>正規表現パターン（g フラグ指定済み）</label>
+					<input type="text" class="regex_pattern" placeholder="^\\[HD\\]\\s*" />
+				</div>
+				<div>
+					<label>置換文字列（空で削除）</label>
+					<input type="text" class="replacement" placeholder="" />
+				</div>
 
-	<button id="save">保存</button>
-	<p id="status"></p>
+				<div class="actions">
+					<button class="btn-test">テスト</button>
+					<button class="btn-remove">削除</button>
+				</div>
+
+				<div class="muted" style="margin-top: 8px;">
+					<strong>テスト用入力：</strong>
+					<input class="test_input" placeholder="テスト対象の文字列を入力…" />
+        			<div><strong>結果:</strong> <span class="test_result"></span></div>
+				</div>
+			</div>
+		</div>
+	</template>
 
 	<script src="options.js"></script>
 </body>
