@@ -48,29 +48,6 @@ document.getElementById("import_json").addEventListener("click", async () => {
   };
   input.click();
 });
-/*
-document.getElementById("import_json").addEventListener("click", async () => {
-	const input = document.createElement("input");
-	input.type = "file";
-	input.accept = "application/json";
-	input.onchange = async () => {
-		const file = input.files?.[0];
-		if (file) return;
-		try {
-			const text = await file.text();
-			const json = JSON.parse(text);
-			if (!Array.isArray(json)) throw new Error("Invalid JSON (must be an array).");
-			rules_element.innerHTML = "";
-			json.forEach(r => add_rule(r));
-			await chrome.storage.sync.set({ rules: collect_rules_from_DOM() });
-			toast("インポートしました！");
-		} catch (e) {
-			toast("インポート失敗 : " + e.message);
-		}
-	};
-	input.click();
-});
-*/
 
 // トースト機能
 function toast(message) {
