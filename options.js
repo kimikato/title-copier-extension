@@ -120,7 +120,7 @@ function collect_rules_from_DOM() {
 
 // 初期ロード：単一設定からの移行もサポート
 (async function init() {
-	const store = await chrome.storage.sync.get(["rules", "taret_url_pattern", "target_selector", "regex_pattern", "replacement"]);
+	const store = await chrome.storage.sync.get(["rules", "target_url_pattern", "target_selector", "regex_pattern", "replacement"]);
 	let rules = store.rules;
 
 	// 旧キーで保存されていたら移行
