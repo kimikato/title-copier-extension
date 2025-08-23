@@ -1,7 +1,7 @@
 {
 	"manifest_version": 3,
 	"name": "Title Copier Extension",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "Copy titles or any text element from web pages (regex supported). / 任意サイトでテキストをコピーできる拡張",
 	"permissions": [
 		"storage",
