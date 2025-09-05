@@ -62,6 +62,7 @@ function add_rule(rule) {
 	node.querySelector(".target_selector").value = rule.target_selector || "";
 	node.querySelector(".regex_pattern").value = rule.regex_pattern || "";
 	node.querySelector(".replacement").value = rule.replacement || "";
+	node.querySelector(".placement").value = rule.placement || "";
 
 	node.querySelector(".btn-remove").addEventListener("click", () => {
 		node.remove();
@@ -91,23 +92,25 @@ function collect_rules_from_DOM() {
 		target_url_pattern: rule_node.querySelector(".target_url_pattern").value.trim(),
 		target_selector: rule_node.querySelector(".target_selector").value.trim(),
 		regex_pattern: rule_node.querySelector(".regex_pattern").value.trim(),
-		replacement: rule_node.querySelector(".replacement").value ?? ""
+		replacement: rule_node.querySelector(".replacement").value ?? "",
+		placement: rule_node.querySelector(".placement").value ?? ""
 	})).filter(r => r.target_url_pattern && r.target_selector);
 }
 
 // 初期ロード：単一設定からの移行もサポート
 (async function init() {
-	const store = await chrome.storage.sync.get(["rules", "target_url_pattern", "target_selector", "regex_pattern", "replacement"]);
+	const store = await chrome.storage.sync.get(["rules", "target_url_pattern", "target_selector", "regex_pattern", "replacement", "placement"]);
 	let rules = store.rules;
 
 	// 旧キーで保存されていたら移行
 	if ((!rules || !Array.isArray(rules) || rules.length === 0) &&
-		(store.target_url_pattern || store.target_selector || store.regex_pattern || store.replacement !== undefined)) {
+		(store.target_url_pattern || store.target_selector || store.regex_pattern || store.replacement || store.placement !== undefined)) {
 			rules = [{
 				target_url_pattern: store.target_url_pattern || "",
 				target_selector: store.target_selector || "",
 				regex_pattern: store.regex_pattern || "",
-				replacement: store.replacement ?? ""
+				replacement: store.replacement ?? "",
+				placement: store.placement ?? ""
 			}].filter(r => r.target_url_pattern && r.target_selector);
 
 			await chrome.storage.sync.set({ rules });
