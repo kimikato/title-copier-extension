@@ -108,13 +108,6 @@
 	anchor.style.verticalAlign = "middle";
 	anchor.appendChild(btn);
 
-	// タイトル直後にアンカーを置く（何度呼んでもOK）
-	const place_after_title = (title_el) => {
-		if (!title_el) return;
-		if (anchor.previousSibling === title_el) return; // 既に直後なら何もしない
-		title_el.insertAdjacentElement("afterend", anchor);
-	};
-
     // タイトル文字を取得（ボタン混入回避：TEXT_NODEのみ集計）
     const get_processed_text = () => {
       let raw = "";
@@ -141,16 +134,44 @@
       }
     });
 
-	// 初回配置
-	place_after_title(el);
+	// placement 決定：設定値優先, auto の時だけ自動判定
+	const pref = (rule.placement === "inside" || rule.placement === "after" || rule.placement === "auto") ? rule.placement : "auto";
+	const mode = pref === "auto" ? choose_placement_mode(el) : pref;
 
-	// タイトル差し替え検知（親を監視）
-	const parent = el.parentNode || document.body;
-	const mo = new MutationObserver(() => {
-		const latest = document.querySelector(rule.target_selector);
-		if (latest) place_after_title(latest);
-	});
-	mo.observe(parent, { childList: true, subtree: true, characterData: true });
+	if (mode == "inside") {
+		// 見出し等は内側に inline で置く（改行はしにくい）
+		const inline_wrap = document.createElement("span");
+		inline_wrap.style.display = "inline-block";
+		inline_wrap.style.verticalAlign = "middle";
+		inline_wrap.appendChild(btn);
+		el.appendChild(inline_wrap);
+		// 内側配置は通常SPA再配置不要（静的サイト限定）
+	} else {
+		// 外側アンカー + 再配置（SPA向け）
+		const anchor = document.createElement("span");
+		anchor.setAttribute("data-title-copier-anchor", "1");
+		anchor.style.display = "inline-block";
+		anchor.style.verticalAlign = "middle";
+		anchor.appendChild(btn);
+
+		// タイトル直後にアンカーを置く（何度呼んでもOK）
+		const place_after_title = (title_el) => {
+			if (!title_el) return;
+			if (anchor.previousSibling === title_el) return; // 既に直後なら何もしない
+			title_el.insertAdjacentElement("afterend", anchor);
+		};
+
+		// 初回配置
+		place_after_title(el);
+
+		// タイトル差し替え検知（親を監視）
+		const parent = el.parentNode || document.body;
+		const mo = new MutationObserver(() => {
+			const latest = document.querySelector(rule.target_selector);
+			if (latest) place_after_title(latest);
+		});
+		mo.observe(parent, { childList: true, subtree: true, characterData: true });
+	}
   }
 
   function show_toast(msg) {
